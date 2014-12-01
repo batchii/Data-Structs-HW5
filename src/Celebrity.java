@@ -29,17 +29,12 @@ final class Celebrity {
         } // while (inputFile.hasNext())
         /** Stores the value of the celebrity. */
         int celebrity = -1;
-        /** Checks if multiple people could be the celebrity. */
-        boolean multiplePeople = false;
         for (int i = 0; i < size; i++) {
-            if (!(graph.hasEdge(i))) {
-                if (celebrity != -1) {
-                    multiplePeople = true;
-                } // if (i != -1)
+            if (!(graph.hasEdge(i)) && graph.numEdges(i) == size - 1) {
                 celebrity = i;
             } // if (!(graph.hasEdge(i)))
         } // for (int i = 0; i < size; i++)
-        if (celebrity == -1 || multiplePeople) {
+        if (celebrity == -1) {
             System.out.println("The celebrity could not be determined"
                     + " because either everyone knows each other (the celebrity"
                     + " cannot know anyone) or not everyone knows the"
