@@ -126,10 +126,10 @@ public class DirectedAcyclicGraph<T> {
         adjList listCrawler = this.top;
         while (listCrawler != null) {
             adjListNode pCrawler = listCrawler.head;
-            System.out.printf("\n Adjacency List of vertex "
+            System.out.println("\n Adjacency List of vertex "
                     + listCrawler.vertex + "\n head");
             while (pCrawler != null) {
-                System.out.printf("-> %d", pCrawler.dest);
+                System.out.println("-> " + pCrawler.dest);
                 pCrawler = pCrawler.next;
             }
             System.out.println("\n");
