@@ -85,5 +85,16 @@ public class DirectedGraph {
         
     }
     
+    private boolean hasEdge(int source, int destination){
+        adjListNode pCrawler = this.array[source].head;
+        while(pCrawler != null){
+            if(pCrawler.dest == destination){
+                return true;
+            }
+            pCrawler = pCrawler.next;
+        }
+        return false;
+    }
+    
     
 }
