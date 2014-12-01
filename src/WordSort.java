@@ -6,5 +6,7 @@ public class WordSort {
             File miniDict = new File(args[0]);
 
         }
+
+        System.out.println("Hi");
     }
 }
