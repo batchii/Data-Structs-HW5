@@ -1,4 +1,4 @@
-package hw5;
+
 
 import java.util.LinkedList;
 
@@ -24,7 +24,9 @@ public class DirectedGraph {
     private class adjList {
         // Pointer to head node of the list
         private adjListNode head;
-
+        
+        
+        
     }
     
     // Number of Vertices
@@ -33,16 +35,10 @@ public class DirectedGraph {
     //the adjacency list
     private adjList array[];
     
-    private adjListNode newAdjListNode(int dest, int length){
-        adjListNode newNode = new adjListNode();
-        newNode.dest = dest;
-        newNode.next = null;
-        return newNode;
-    }
-    
     
     /**
      * 
+     * @param v - the number of vertices in the graph
      */
     public DirectedGraph(int v){
         //Number of vertices
