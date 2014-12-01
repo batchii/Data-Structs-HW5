@@ -53,7 +53,9 @@ public class DirectedAcyclicGraph<T> {
 
     /**
      * Adds an additional vertex to this graph
-     * @param source - the vertex value
+     * 
+     * @param source
+     *            - the vertex value
      */
     public void addVertex(T source) {
         if (!hasVertex(source)) {
@@ -119,6 +121,24 @@ public class DirectedAcyclicGraph<T> {
         return false;
     }
 
+    /**
+     * Remove specified vertex
+     * 
+     * @return
+     */
+    public T removeVertex(T vertexToDelete) {
+        adjList listCrawler = this.top;
+        while (listCrawler != null
+                && !listCrawler.vertex.equals(vertexToDelete)) {
+            listCrawler = listCrawler.down;
+        }
+        return null;
+    }
+
+    public boolean hasNext(T vertex) {
+        return false;
+    }
+
     /*
      * To print the adjacency list in the representation of a graph
      */
@@ -138,7 +158,7 @@ public class DirectedAcyclicGraph<T> {
 
     }
 
- // Driver to test functions in DirectedGraph
+    // Driver to test functions in DirectedGraph
     public static void main(String[] args) {
         // create the graph given in above figure
 
@@ -148,7 +168,7 @@ public class DirectedAcyclicGraph<T> {
         graph.addVertex(2);
         graph.addVertex(3);
         graph.addVertex(4);
-        
+
         graph.addEdge(0, 1);
         graph.addEdge(0, 4);
         graph.addEdge(1, 2);
