@@ -1,38 +1,54 @@
-
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class Celebrity {
+/**
+ * @author bhu9
+ * A driver program to find the celebrity given relationships between people.
+ */
+final class Celebrity {
 
-    /** The number of allowable command line arguments. */
-    private static final int MAX_NUMBER_ARGS = 1;
+    /** Prevents unwanted instantiation. */
+    private Celebrity() {
+    } // private Celebrity()
 
-    Scanner sc;
-    
-    public Celebrity(String filename) throws IOException{
-        sc = new Scanner(new File(filename));
-        
-    }
-    
-    public void run(){
-        
-    }
-    
+    /**
+     * @author bhu9
+     * The main method.
+     * @param args          the text files of players that will be read
+     * @throws IOException  occurs when text files are not properly provided
+     */
     public static void main(String[] args) throws IOException {
-        String filename = null;
-        if (args.length == 1) {
-            filename = args[0];
+        Scanner inputFile = new Scanner(new FileInputStream(args[0]));
+        int size = inputFile.nextInt();
+        Task1DS graph = new Task1DS(size);
+        while (inputFile.hasNext()) {
+            int source = inputFile.nextInt();
+            int destination = inputFile.nextInt();
+            graph.addEdge(source, destination);
+        } // while (inputFile.hasNext())
+        /** Stores the value of the celebrity. */
+        int celebrity = -1;
+        /** Checks if multiple people could be the celebrity. */
+        boolean multiplePeople = false;
+        for (int i = 0; i < size; i++) {
+            if (!(graph.hasEdge(i))) {
+                if (celebrity != -1) {
+                    multiplePeople = true;
+                } // if (i != -1)
+                celebrity = i;
+            } // if (!(graph.hasEdge(i)))
+        } // for (int i = 0; i < size; i++)
+        if (celebrity == -1 || multiplePeople) {
+            System.out.println("The celebrity could not be determined"
+                    + " because either everyone knows each other (the celebrity"
+                    + " cannot know anyone) or not everyone knows the"
+                    + " celebrity (everyone must know him/her).");
         } else {
-            System.out.println("Please specify a filename");
-            System.exit(0);
-        }
-        Celebrity myCelebrity = new Celebrity(filename);
-        myCelebrity.run();
-    }
+            System.out.println("The celebrity person is " + celebrity + ".");
+        } // else
+        inputFile.close();
 
-}
+    } //public static void main(String[] args) throws IOException
+
+} // public class Celebrity
