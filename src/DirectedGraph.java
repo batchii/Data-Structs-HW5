@@ -63,15 +63,15 @@ public class DirectedGraph {
         newNode.dest = destination;
 
         // Add edge from source to destination
-        if (!hasEdge(source, destination)) {
+        if (!this.hasEdge(source, destination)) {
             newNode.next = this.array[source].head;
             this.array[source].head = newNode;
         }
 
     }
 
-    /*
-     * To print the adjacency list in the representation of a graph
+    /**
+     * To print the adjacency list in the representation of a graph.
      */
     public void printGraph() {
         for (int v = 0; v < this.V; v++) {

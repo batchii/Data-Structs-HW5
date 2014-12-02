@@ -1,21 +1,45 @@
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Scanner;
 
+/**
+ * 
+ * @author atab7_000
+ *
+ */
 public class CourseSchedule {
 
-    // Scanner for the file
+    /**
+     * The scanner of the file.
+     */
     private Scanner sc;
 
-    // filename
+    /**
+     *  file to be read.
+     */
     private String filename;
 
+    /**
+     * Our datastructure.
+     */
     private DirectedAcyclicGraph2<String> myGraph;
 
+    /**
+     * 
+     * @param filename1 - the filename to be read
+     * @throws FileNotFoundException - thrown in file is not found
+     */
+    public CourseSchedule(String filename1) throws FileNotFoundException {
+        this.sc = new Scanner(new File(filename1));
+        this.filename = filename1;
+        this.myGraph = new DirectedAcyclicGraph2<String>();
+    }
+    
+    /**
+     * 
+     * @param args - "filename.txt"
+     * @throws FileNotFoundException - make sure the file is in the directory
+     */
     public static void main(String[] args) throws FileNotFoundException {
         String filename = null;
         if (args.length == 1) {
@@ -29,22 +53,26 @@ public class CourseSchedule {
 
     }
 
-    public CourseSchedule(String filename1) throws FileNotFoundException {
-        this.filename = filename1;
-        this.sc = new Scanner(new File(filename1));
-        this.myGraph = new DirectedAcyclicGraph2<String>();
-    }
 
+
+    /**
+     * Starts the scheduler and does all the work.
+     * @throws FileNotFoundException - is the file being read found?
+     */
     public void run() throws FileNotFoundException {
         this.parseFile();
         this.generateClassSchedule();
     }
 
+    /**
+     * Parses the file with the info in it.
+     * @throws FileNotFoundException - is the file being read found?
+     */
     private void parseFile() throws FileNotFoundException {
         String currentLine;
         // Create vertices
-        while (sc.hasNextLine()) {
-            currentLine = sc.next();
+        while (this.sc.hasNextLine()) {
+            currentLine = this.sc.next();
             Scanner lineParser = new Scanner(currentLine);
             // This is the target vertex
             String course = lineParser.next();
@@ -52,7 +80,7 @@ public class CourseSchedule {
 
         }
         // Create links
-        sc = new Scanner(new File(this.filename));
+        this.sc = new Scanner(new File(this.filename));
         while (this.sc.hasNextLine()) {
             currentLine = this.sc.nextLine();
             Scanner lineParser = new Scanner(currentLine);
@@ -66,6 +94,9 @@ public class CourseSchedule {
 
     }
 
+    /**
+     * Prints to output the entire class schedule.
+     */
     private void generateClassSchedule() {
         // Need to run thru
         String schedule = "";
