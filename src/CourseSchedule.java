@@ -1,5 +1,9 @@
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Scanner;
 
 public class CourseSchedule {
@@ -7,7 +11,10 @@ public class CourseSchedule {
     // Scanner for the file
     private Scanner sc;
 
-    private DirectedAcyclicGraph<String> myGraph;
+    // filename
+    private String filename;
+
+    private DirectedAcyclicGraph2<String> myGraph;
 
     public static void main(String[] args) throws FileNotFoundException {
         String filename = null;
@@ -22,32 +29,55 @@ public class CourseSchedule {
 
     }
 
-    public CourseSchedule(String filename) throws FileNotFoundException {
-        sc = new Scanner(new File(filename));
-        myGraph = new DirectedAcyclicGraph<String>();
+    public CourseSchedule(String filename1) throws FileNotFoundException {
+        this.filename = filename1;
+        this.sc = new Scanner(new File(filename1));
+        this.myGraph = new DirectedAcyclicGraph2<String>();
     }
 
-    public void run() {
-        parseFile();
-        generateClassSchedule();
+    public void run() throws FileNotFoundException {
+        this.parseFile();
+        this.generateClassSchedule();
     }
-    
-    private void parseFile(){
-         String currentLine;
+
+    private void parseFile() throws FileNotFoundException {
+        String currentLine;
+        // Create vertices
         while (sc.hasNextLine()) {
             currentLine = sc.next();
             Scanner lineParser = new Scanner(currentLine);
-            //This is the target vertex
+            // This is the target vertex
             String course = lineParser.next();
-            myGraph.addVertex(course);
-            while(lineParser.hasNext()){
-                myGraph.addEdge(course, lineParser.next());
+            this.myGraph.addVertex(course);
+
+        }
+        // Create links
+        sc = new Scanner(new File(this.filename));
+        while (this.sc.hasNextLine()) {
+            currentLine = this.sc.nextLine();
+            Scanner lineParser = new Scanner(currentLine);
+            // This is the target vertex
+            String course = lineParser.next();
+            while (lineParser.hasNext()) {
+                String prereq = lineParser.next();
+                this.myGraph.addEdge(course, prereq);
             }
         }
+
     }
-    
-    private void generateClassSchedule(){
-        
+
+    private void generateClassSchedule() {
+        // Need to run thru
+        String schedule = "";
+        int numSemester = 0;
+        while (this.myGraph.getNumberVertices() > 0) {
+            numSemester++;
+            schedule += "Semester " + numSemester + ":\n";
+            schedule += this.myGraph.getSemester();
+        }
+        System.out.println(schedule);
+        System.out
+                .println("Total number of semesters required: " + numSemester);
     }
 
 }
