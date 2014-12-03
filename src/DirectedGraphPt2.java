@@ -1,6 +1,4 @@
-
 import java.util.LinkedList;
-
 
 public class DirectedGraphPt2<T> {
 
@@ -10,11 +8,11 @@ public class DirectedGraphPt2<T> {
      */
     private class VertexNode {
         /**
-         *  The destination of an edge.
+         * The destination of an edge.
          */
         private T dest;
         /**
-         *  Pointer to the next adjListNode.
+         * Pointer to the next adjListNode.
          */
         private VertexNode next;
 
@@ -26,11 +24,11 @@ public class DirectedGraphPt2<T> {
      */
     private class Vertex {
         /**
-         *  Pointer to head node of the list.
+         * Pointer to head node of the list.
          */
         private VertexNode head;
         /**
-         *  Pointer to the next adjList.
+         * Pointer to the next adjList.
          */
         private Vertex down;
 
@@ -39,27 +37,22 @@ public class DirectedGraphPt2<T> {
          */
         private T vertex;
 
-        /**
-         *  Lists the number of prerequisite classes linked to this vertex.
-         */
-        private int numPreReqs;
-
-        /**
-         *  Determines whether this has been used in the current list.
-         */
-        private boolean flag;
-
     }
 
     /**
-     *  Number of Vertices.
+     * Number of Vertices.
      */
     private int numVerts;
 
     /**
-     *  the adjacency list.
+     * the adjacency list.
      */
     private Vertex top;
+
+    /**
+     * The bottom pointer of the adjacency list, used for inserts
+     */
+    private Vertex bot;
 
     /**
      * 
@@ -71,6 +64,7 @@ public class DirectedGraphPt2<T> {
 
         // Create an array of adjacency lists. Size of array will be V
         this.top = null;
+        this.bot = null;
     }
 
     /**
@@ -80,22 +74,31 @@ public class DirectedGraphPt2<T> {
      *            - the vertex value
      */
     public void addVertex(T source) {
-        if (!this.hasVertex(source)) {
+        if (this.numVerts != 0) {
+            if (!this.hasVertex(source)) {
+                Vertex newAdjList = new Vertex();
+                newAdjList.head = null;
+                // Replace top of the linked list adjacency list
+                this.bot.down = newAdjList;
+                this.bot = newAdjList;
+                newAdjList.vertex = source;
+                this.numVerts++;
+            }
+        } else {
+            // No verts currently in the list, time to start adding
             Vertex newAdjList = new Vertex();
             newAdjList.head = null;
-            newAdjList.flag = true;
-            // Replace top of the linked list adjacency list
-            newAdjList.down = this.top;
             this.top = newAdjList;
+            this.bot = newAdjList;
             newAdjList.vertex = source;
-            newAdjList.numPreReqs = 0; // Set to just added/nuetral
             this.numVerts++;
-        } 
+        }
     }
 
     /**
      * 
-     * @param source - Looks for the vertex with this value
+     * @param source
+     *            - Looks for the vertex with this value
      * @return - true if found, false if not found
      */
     public boolean hasVertex(T source) {
@@ -130,36 +133,103 @@ public class DirectedGraphPt2<T> {
         while (listCrawler != null && !listCrawler.vertex.equals(source)) {
             listCrawler = listCrawler.down;
         }
-        if (!this.hasEdge(listCrawler, destination)) {
-            // Add to the beginning
-            newNode.next = listCrawler.head;
-            listCrawler.head = newNode;
-            listCrawler.numPreReqs++;
-        } else {
-            listCrawler.numPreReqs++;
-        }
+        // Replace current edge
+        listCrawler.head = newNode;
 
+    }
+
+    public char[] returnOrder() {
+        String[] builder;
+        builder = getPairs();
+        String ordered = "";
+        for(int ii= 0; ii<builder.length; ii++){
+            System.out.println(builder[ii]);
+        }
+        // Repeat until entire string is built
+        while (builder.length > 0) {
+            // Build the string
+            for (int ii = 0; ii < builder.length; ii++) {
+                if (ordered.length() > 0) {
+                    if (builder[ii].length() != 1) {
+
+                        if (ordered.contains(String.valueOf(builder[ii]
+                                .charAt(0)))) {
+                            // Does it contain the vertex already?
+                            ordered += builder[ii].charAt(1); // Add to end b/c
+                                                              // only
+                                                              // way
+                            // Delete what was added from array
+                            String[] temp = new String[builder.length - 1];
+                            System.arraycopy(builder, 0, temp, 0, ii);
+                            if (builder.length != ii) {
+                                System.arraycopy(builder, ii + 1, temp, ii,
+                                        builder.length - ii - 1);
+                            }
+                            builder = temp;
+
+                        } else if (ordered.contains(String.valueOf(builder[ii]
+                                .charAt(1)))) {
+                            // Does it contain the edge already?
+                            ordered = builder[ii].charAt(0)
+                                    + ordered.substring(1);
+                            // Delete what was added from array
+                            String[] temp = new String[builder.length - 1];
+                            System.arraycopy(builder, 0, temp, 0, ii);
+                            if (builder.length != ii) {
+                                System.arraycopy(builder, ii + 1, temp, ii,
+                                        builder.length - ii - 1);
+                            }
+                            builder = temp;
+                        } else {
+                            // Doesn't contain either, skip and move on
+                            ii++;
+                        }
+                    } else {
+                        if (ordered.contains(String.valueOf(builder[ii]
+                                .charAt(0)))) {
+                            // Remove from array
+                            String[] temp = new String[builder.length - 1];
+                            System.arraycopy(builder, 0, temp, 0, ii);
+                            if (builder.length != ii) {
+                                System.arraycopy(builder, ii + 1, temp, ii,
+                                        builder.length - ii - 1);
+                            }
+                            builder = temp;
+                        }
+
+                        // Do nothing otherwise
+                    }
+                } else {
+                    // Ordered has nothing in it yet, gotta put something in it
+                    ordered += builder[ii];
+                    String[] temp = new String[builder.length- 1];
+                    System.arraycopy(builder, 1, temp, 0, builder.length - 1);
+                    builder = temp;
+                }
+            }
+        }
+        return ordered.toCharArray();
     }
 
     /**
-     *  Checks the given vertex if there is an edge to destination.
-     * @param listCrawler - the vertex we are looking at
-     * @param destination - the destination vertex
-     * @return true if edge is present, otherwise false.
+     * 
+     * @return Vertex,Edge pairs, or if there is no pair, just the vertex.
      */
-    private boolean hasEdge(Vertex listCrawler, T destination) {
-        VertexNode pCrawler = listCrawler.head;
+    private String[] getPairs() {
+        String[] builder = new String[this.numVerts];
+        Vertex pCrawler = this.top;
+        int ii = 0;
         while (pCrawler != null) {
-            if (pCrawler.dest.equals(destination)) {
-                return true;
+            builder[ii] = (String) pCrawler.vertex;
+            if (pCrawler.head != null) {
+                builder[ii] += pCrawler.head.dest;
             }
-            pCrawler = pCrawler.next;
+            pCrawler = pCrawler.down;
+            ii++;
         }
-        return false;
+        return builder;
     }
 
-    
-    
     /**
      * To print the adjacency list in the representation of a graph.
      */
@@ -179,23 +249,23 @@ public class DirectedGraphPt2<T> {
 
     }
 
-
-
- // Driver to test functions in DirectedGraph
+    // Driver to test functions in DirectedGraph
     public static void main(String[] args) {
         // create the graph given in above figure
         int V = 5;
-        DirectedGraphPt2 graph = new DirectedGraphPt2();
-        graph.addEdge(0, 1);
-        graph.addEdge(0, 4);
-        graph.addEdge(1, 2);
-        graph.addEdge(1, 3);
-        graph.addEdge(1, 4);
-        graph.addEdge(2, 3);
-        graph.addEdge(3, 4);
-
-        // print the adjacency list representation of the above graph
+        DirectedGraphPt2<String> graph = new DirectedGraphPt2<String>();
+        graph.addVertex("a");
+        graph.addVertex("b");
+        graph.addVertex("c");
+        graph.addVertex("d");
+        graph.addVertex("e");
+        graph.addEdge("a", "b");
+        graph.addEdge("b", "c");
+        graph.addEdge("c", "d");
+        graph.addEdge("d", "e");
         graph.printGraph();
+        System.out.println(graph.returnOrder());
+        // print the adjacency list representation of the above graph
 
     }
 }
