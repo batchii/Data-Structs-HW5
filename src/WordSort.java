@@ -8,8 +8,6 @@ public class WordSort {
     private String[] dict;
     private String[] unsorted;
 
-    private String firstWord;
-    private String secondWord;
     private char[] order;
     DirectedGraphPt2<String> graph = new DirectedGraphPt2<String>();
 
@@ -56,8 +54,8 @@ public class WordSort {
             i++;
             j++;
         }
-        // graph.printGraph();
-        // this.order = graph.returnOrder();
+        this.order = graph.returnOrder();
+        System.out.println(this.order);
     }
 
     public static void main(String args[]) throws FileNotFoundException {

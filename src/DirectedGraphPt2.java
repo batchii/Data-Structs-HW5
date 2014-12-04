@@ -1,9 +1,7 @@
-import java.util.LinkedList;
-
 public class DirectedGraphPt2<T> {
 
     /**
-     * 
+     *
      * @author atab7_000 Structure to represent an adjacency list node
      */
     private class VertexNode {
@@ -19,7 +17,7 @@ public class DirectedGraphPt2<T> {
     }
 
     /**
-     * 
+     *
      * @author atab7_000 Structure to represent an adjacency list
      */
     private class Vertex {
@@ -55,7 +53,7 @@ public class DirectedGraphPt2<T> {
     private Vertex bot;
 
     /**
-     * 
+     *
      * Creates an empty DirectedGraph.
      */
     public DirectedGraphPt2() {
@@ -69,7 +67,7 @@ public class DirectedGraphPt2<T> {
 
     /**
      * Adds an additional vertex to this graph.
-     * 
+     *
      * @param source
      *            - the vertex value
      */
@@ -96,7 +94,7 @@ public class DirectedGraphPt2<T> {
     }
 
     /**
-     * 
+     *
      * @param source
      *            - Looks for the vertex with this value
      * @return - true if found, false if not found
@@ -115,7 +113,7 @@ public class DirectedGraphPt2<T> {
 
     /**
      * Adds an edge to the graph.
-     * 
+     *
      * @param source
      *            - The source of the edge
      * @param destination
@@ -142,8 +140,8 @@ public class DirectedGraphPt2<T> {
         String[] builder;
         builder = getPairs();
         String ordered = "";
-        for(int ii= 0; ii<builder.length; ii++){
-            System.out.println(builder[ii]);
+        for (int ii = 0; ii < builder.length; ii++) {
+            // System.out.println(builder[ii]);
         }
         // Repeat until entire string is built
         while (builder.length > 0) {
@@ -156,8 +154,8 @@ public class DirectedGraphPt2<T> {
                                 .charAt(0)))) {
                             // Does it contain the vertex already?
                             ordered += builder[ii].charAt(1); // Add to end b/c
-                                                              // only
-                                                              // way
+                            // only
+                            // way
                             // Delete what was added from array
                             String[] temp = new String[builder.length - 1];
                             System.arraycopy(builder, 0, temp, 0, ii);
@@ -202,17 +200,18 @@ public class DirectedGraphPt2<T> {
                 } else {
                     // Ordered has nothing in it yet, gotta put something in it
                     ordered += builder[ii];
-                    String[] temp = new String[builder.length- 1];
+                    String[] temp = new String[builder.length - 1];
                     System.arraycopy(builder, 1, temp, 0, builder.length - 1);
                     builder = temp;
                 }
             }
         }
+
         return ordered.toCharArray();
     }
 
     /**
-     * 
+     *
      * @return Vertex,Edge pairs, or if there is no pair, just the vertex.
      */
     private String[] getPairs() {
