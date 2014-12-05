@@ -127,6 +127,13 @@ public class WordSort {
             if (a.charAt(i) != b.charAt(i)) {
                 break;
             } // if
+            if (i == index - 1) {
+                if (numFirstIndices > numSecondIndices) {
+                    return 1;
+                } else {
+                    return -1;
+                } // else
+            } //if
         } // for
         int orderOfA = -1;
         int orderOfB = -1;
@@ -140,18 +147,16 @@ public class WordSort {
         } // for
         if (orderOfA > orderOfB) {
             return 1;
-        } else if (orderOfA < orderOfB) {
-            return -1;
         } else {
             return 0;
-        }
+        } // else
     } // compareTo
 
     /**
      * The main method, which recieves three arguments, the dictionary file
      * name, the unsorted file name, and the sorted file name, and produces a
      * sorted file of the given name.
-     * 
+     *
      * @param args
      *            the names of the dictionary, unsorted, and sorted files
      * @throws FileNotFoundException
