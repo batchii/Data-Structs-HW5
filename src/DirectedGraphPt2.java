@@ -1,3 +1,6 @@
+/** A directed graph data structure used for Task 2.
+ * @param <T>   generic of type T
+ **/
 public class DirectedGraphPt2<T> {
 
     /**
@@ -48,7 +51,7 @@ public class DirectedGraphPt2<T> {
     private Vertex top;
 
     /**
-     * The bottom pointer of the adjacency list, used for inserts
+     * The bottom pointer of the adjacency list, used for inserts.
      */
     private Vertex bot;
 
@@ -136,13 +139,13 @@ public class DirectedGraphPt2<T> {
 
     }
 
+    /**
+     * Iterates through the data structure to produce the ordered elements.
+     * @return     a character array of the ordered items.*/
     public char[] returnOrder() {
         String[] builder;
-        builder = getPairs();
+        builder = this.getPairs();
         String ordered = "";
-        for (int ii = 0; ii < builder.length; ii++) {
-            // System.out.println(builder[ii]);
-        }
         // Repeat until entire string is built
         while (builder.length > 0) {
             // Build the string
@@ -245,26 +248,6 @@ public class DirectedGraphPt2<T> {
             System.out.println("\n");
             listCrawler = listCrawler.down;
         }
-
-    }
-
-    // Driver to test functions in DirectedGraph
-    public static void main(String[] args) {
-        // create the graph given in above figure
-        int V = 5;
-        DirectedGraphPt2<String> graph = new DirectedGraphPt2<String>();
-        graph.addVertex("a");
-        graph.addVertex("b");
-        graph.addVertex("c");
-        graph.addVertex("d");
-        graph.addVertex("e");
-        graph.addEdge("a", "b");
-        graph.addEdge("b", "c");
-        graph.addEdge("c", "d");
-        graph.addEdge("d", "e");
-        graph.printGraph();
-        System.out.println(graph.returnOrder());
-        // print the adjacency list representation of the above graph
 
     }
 }
