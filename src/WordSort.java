@@ -91,7 +91,8 @@ public class WordSort {
         String temp;
         for (int i = 1; i < this.unsorted.length; i++) {
             for (int j = 0; j < this.unsorted.length - i; j++) {
-                if (this.compareTo(this.unsorted[j], this.unsorted[j + 1]) > 0) {
+                if (this.compareTo(this.unsorted[j],
+                        this.unsorted[j + 1]) > 0) {
                     temp = this.unsorted[j];
                     this.unsorted[j] = this.unsorted[j + 1];
                     this.unsorted[j + 1] = temp;
