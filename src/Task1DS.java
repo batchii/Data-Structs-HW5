@@ -10,14 +10,27 @@ public class Task1DS {
      */
     private class Node {
 
+        /** Data stored in the node. */
+        int data;
         /** A pointer to the next node. */
         Node next;
 
         /**
          * @author bhu9
-         * Constructs a Node class, setting next to null.
+         * Constructs a Node class, setting data to -1 next to null.
          */
         public Node() {
+            this.data = -1;
+            this.next = null;
+        } // public Node()
+
+        /**
+         * @author bhu9
+         * Constructs a Node class, setting data to the input and next to null.
+         * @param value     the int value to be stored
+         */
+        public Node(int value) {
+            this.data = value;
             this.next = null;
         } // public Node()
 
@@ -63,7 +76,8 @@ public class Task1DS {
 
     /**
      * @author bhu9
-     * Adds an edge to the graph.
+     * Adds an edge to the graph. Cannot add edges to itself
+     * or add multiple edges to the same destination.
      * @param source        the source of the edge
      * @param destination   the end point of the edge
      */
@@ -71,7 +85,14 @@ public class Task1DS {
         if (source == destination) {
             return;
         } // if (source == destination)
-        this.arrayLL[source].tail.next = new Node();
+        Node pointer = this.arrayLL[source].head;
+        while (pointer.next != null) {
+            if (pointer.next.data == destination) {
+                return;
+            } // if (pointer.next.data == destination)
+            pointer = pointer.next;
+        } // while (pointer.next != null)
+        this.arrayLL[source].tail.next = new Node(destination);
         this.arrayLL[source].tail.next = this.arrayLL[source].tail.next;
         this.arrayInt[destination]++;
     } // public void addEdge(int source, int destination)

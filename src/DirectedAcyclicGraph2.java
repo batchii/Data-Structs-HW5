@@ -1,5 +1,5 @@
 /**
- * 
+ *
  * @author atab7_000
  *
  * @param <T>
@@ -8,7 +8,7 @@
 public class DirectedAcyclicGraph2<T> {
 
     /**
-     * 
+     *
      * @author atab7_000 Structure to represent an adjacency list node
      */
     private class VertexNode {
@@ -24,7 +24,7 @@ public class DirectedAcyclicGraph2<T> {
     }
 
     /**
-     * 
+     *
      * @author atab7_000 Structure to represent an adjacency list
      */
     private class Vertex {
@@ -65,7 +65,7 @@ public class DirectedAcyclicGraph2<T> {
     private Vertex top;
 
     /**
-     * 
+     *
      * Creates an empty DirectedGraph.
      */
     public DirectedAcyclicGraph2() {
@@ -78,7 +78,7 @@ public class DirectedAcyclicGraph2<T> {
 
     /**
      * Adds an additional vertex to this graph.
-     * 
+     *
      * @param source
      *            - the vertex value
      */
@@ -93,11 +93,11 @@ public class DirectedAcyclicGraph2<T> {
             newAdjList.vertex = source;
             newAdjList.numPreReqs = 0; // Set to just added/nuetral
             this.numVerts++;
-        } 
+        }
     }
 
     /**
-     * 
+     *
      * @param source - Looks for the vertex with this value
      * @return - true if found, false if not found
      */
@@ -115,7 +115,7 @@ public class DirectedAcyclicGraph2<T> {
 
     /**
      * Adds an edge to the graph.
-     * 
+     *
      * @param source
      *            - The source of the edge
      * @param destination
@@ -236,8 +236,8 @@ public class DirectedAcyclicGraph2<T> {
     }
 
     /**
-     * 
-     * @param vertex - the vertex with this value we are looking for 
+     *
+     * @param vertex - the vertex with this value we are looking for
      * @return - the linked list that this vertex starts, null if it DNE
      */
     public Vertex findVertexNode(T vertex) {
@@ -254,7 +254,7 @@ public class DirectedAcyclicGraph2<T> {
     }
 
     /**
-     * 
+     *
      * @return - Gets all of the vertices with 0 edges to other vertices,
      *         compiles into string
      */
@@ -282,7 +282,7 @@ public class DirectedAcyclicGraph2<T> {
     }
 
     /**
-     * 
+     *
      * @return - the number of vertices in the graph.
      */
     public int getNumberVertices() {

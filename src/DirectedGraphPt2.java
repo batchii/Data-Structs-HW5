@@ -181,9 +181,6 @@ public class DirectedGraphPt2<T> {
                                         builder.length - ii - 1);
                             }
                             builder = temp;
-                        } else {
-                            // Doesn't contain either, skip and move on
-                            ii++;
                         }
                     } else {
                         if (ordered.contains(String.valueOf(builder[ii]

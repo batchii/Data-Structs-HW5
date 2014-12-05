@@ -3,7 +3,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 /**
- * 
+ *
  * @author atab7_000
  *
  */
@@ -25,7 +25,7 @@ public class CourseSchedule {
     private DirectedAcyclicGraph2<String> myGraph;
 
     /**
-     * 
+     *
      * @param filename1 - the filename to be read
      * @throws FileNotFoundException - thrown in file is not found
      */
@@ -34,9 +34,9 @@ public class CourseSchedule {
         this.filename = filename1;
         this.myGraph = new DirectedAcyclicGraph2<String>();
     }
-    
+
     /**
-     * 
+     *
      * @param args - "filename.txt"
      * @throws FileNotFoundException - make sure the file is in the directory
      */
@@ -72,11 +72,12 @@ public class CourseSchedule {
         String currentLine;
         // Create vertices
         while (this.sc.hasNextLine()) {
-            currentLine = this.sc.next();
+            currentLine = this.sc.nextLine();
             Scanner lineParser = new Scanner(currentLine);
             // This is the target vertex
             String course = lineParser.next();
             this.myGraph.addVertex(course);
+            lineParser.close();
 
         }
         // Create links
@@ -90,6 +91,7 @@ public class CourseSchedule {
                 String prereq = lineParser.next();
                 this.myGraph.addEdge(course, prereq);
             }
+            lineParser.close();
         }
 
     }
